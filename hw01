@@ -1,0 +1,26 @@
+package main
+
+import (
+	"errors"
+)
+
+func main() {
+	test := []int{1, 2, 3, 5, 6}
+	slc, _, _ := DelSlice(test, 2)
+	for k, v := range slc {
+		println(k, v)
+	}
+}
+
+func DelSlice[T any](slc []T, idx int) ([]T, T, error) {
+	if idx < 0 || idx >= len(slc) {
+		var t T
+		return nil, t, errors.New("超出范围")
+	}
+	res := slc[idx]
+	for i := idx; i+1 < len(slc); i++ {
+		slc[i] = slc[i+1]
+	}
+	slc = slc[:len(slc)-1]
+	return slc, res, nil
+}
